@@ -3,6 +3,22 @@ local opts = {
   silent = true,
 }
 
+-- remap o to navigation after f/k because ; is inconvenient in colemak
+-- also remap O to :
+vim.keymap.set('', 'o', ';')
+vim.keymap.set('', 'O', ':')
+
+-- and then : and ; can set marks (for now...)
+vim.keymap.set('', ';', '<nop>')
+vim.keymap.set('', ':', '<nop>')
+
+-- and ' and " can open lines since they're close to the enter key
+vim.keymap.set('', '\'', 'o')
+vim.keymap.set('', '\"', 'O')
+
+-- remap 0 to ^
+vim.keymap.set('', '0', '^')
+
 -- remap U to redo
 vim.keymap.set('', 'U', '<c-r>')
 

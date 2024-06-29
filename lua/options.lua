@@ -32,6 +32,5 @@ vim.opt.listchars = {
 }
 
 -- enable mouse move events so that we can have cool hover effects
--- TODO
 vim.opt.mousemoveevent = true
 

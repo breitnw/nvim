@@ -1,5 +1,12 @@
 -- plugins for making the ui look pretty
 return {
+  -- scrollbar with errors
+  {
+    "petertriho/nvim-scrollbar",
+    config = function ()
+      require("scrollbar").setup()
+    end
+  },
   -- highlight TODOs
   {
     "folke/todo-comments.nvim",
@@ -17,6 +24,7 @@ return {
       require('nvim-highlight-colors').setup({})
     end
   },
+  -- highlight yanked lines and regions
   {
     "machakann/vim-highlightedyank",
     config = function()
@@ -106,7 +114,9 @@ return {
     "rcarriga/nvim-notify",
     config = function ()
       require("notify").setup({
-        render = "compact",
+        render = "default",
+        level = 2,
+        -- stages = "static",
         timeout = 3000,
       })
     end
