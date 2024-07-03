@@ -3,13 +3,12 @@ return {
   {
     "comfysage/evergarden",
     priority = 1000,
-    opts = {
-      transparent_background = false,
-      contrast_dark = "medium",
-      overrides = {},
-    },
     config = function ()
       local evergarden = require("evergarden")
+      evergarden.setup({
+        transparent_background = false,
+      })
+
       local colors = evergarden.colors()
       -- load the colors from evergarden:
       --   bg0_hard    = { "#1A2024", 0 },
@@ -35,20 +34,21 @@ return {
       --   grey2       = { "#9DA9A0", 8 },
 
       -- set evergarden as the color scheme
-      local colorscheme = 'evergarden'
-      local is_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-      if not is_ok then
-        vim.notify('colorscheme ' .. colorscheme .. ' not found!')
-        return
-      end
+      vim.cmd([[colorscheme evergarden]])
 
       -- configure other highlight groups to play nice with it
       -- nvim-tree highlight groups
-      vim.api.nvim_set_hl(0, 'NvimTreeNormal', {
-        bg = colors.bg0_hard[1]
-      })
-      -- bg2 if we want the proper border color
-      -- vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', { fg = colors.bg0[1], bg = colors.bg0[1] })
+      -- vim.api.nvim_set_hl(0, 'NvimTreeNormal', {
+      --   bg = colors.bg0_hard[1]
+      -- })
+      -- vim.api.nvim_set_hl(0, 'NvimTreeWinSeparator', {
+      --   fg = colors.bg0_hard[1],
+      --   bg = colors.bg0[1]
+      -- })
+      -- vim.api.nvim_set_hl(0, 'WinSeparator', {
+      --   fg = colors.bg0_hard[1],
+      --   bg = colors.bg0[1]
+      -- })
 
       -- configure float highlight groups
       vim.api.nvim_set_hl(0, 'NormalFloat', { fg = colors.fg[1], bg = colors.bg0[1] })

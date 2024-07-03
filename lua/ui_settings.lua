@@ -51,15 +51,15 @@ vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSig
 -- vim.opt.fillchars = { horiz = '━', horizup = '┻', horizdown = '┳', vert = '┃', vertleft = '┫', vertright = '┣', verthoriz = '╋', }
 
 -- window borders aligned to the windows properly
-vim.opt.fillchars = {
-  horiz = '─',
-  horizup = '─',
-  horizdown = '─',
-  vert = '▏',
-  vertleft = '▏',
-  vertright = '─',
-  verthoriz = '─',
-}
+-- vim.opt.fillchars = {
+--   horiz = '─',
+--   horizup = '─',
+--   horizdown = '─',
+--   vert = '▏',
+--   vertleft = '▏',
+--   vertright = '─',
+--   verthoriz = '─',
+-- }
 
 -- horizontal window borders via global status line
 vim.opt.laststatus = 3

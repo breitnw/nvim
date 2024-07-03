@@ -1,7 +1,6 @@
 -- vim.opt.clipboard = 'unnamedplus'
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.mouse = 'a'
-
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -24,13 +23,12 @@ vim.opt.wrap = false
 
 vim.opt.list = true
 vim.opt.listchars = {
---  lead = '·',   -- Display spaces as dots
-  tab = '»·',    -- Display tabs with a special character
-  trail = '·',   -- Display trailing spaces
+  -- lead = '·',   -- Display spaces as dots
+  trail = '·',   -- Display spaces as dots
+  tab = '» ', -- Display tabs with a special character
   extends = '⟩', -- Display character for text that extends beyond the window
   precedes = '⟨' -- Display character for text that precedes the window
 }
 
 -- enable mouse move events so that we can have cool hover effects
 vim.opt.mousemoveevent = true
-

@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
+      vim.filetype.add({extension = {wgsl = "wgsl"}})
       local configs = require("nvim-treesitter.configs")
       configs.setup({
         highlight = {
@@ -12,13 +13,13 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection    = "gnn",
-            node_incremental  = "grn",
-            scope_incremental = "grc",
-            node_decremental  = "grm",
+            init_selection    = "<leader>nn",
+            node_incremental  = "<leader>ng",
+            scope_incremental = "<leader>ns",
+            node_decremental  = "<leader>nd",
           },
         },
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "rust", "java" }
+        ensure_installed = { "wgsl", "r", "c", "lua", "vim", "vimdoc", "rust", "java" }
       })
     end
   }

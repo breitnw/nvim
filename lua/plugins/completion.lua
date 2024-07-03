@@ -1,9 +1,10 @@
 return {
-  -- autocomplete (lspkind allows pictograms)
+  -- autocomplete pictograms
   {
     "onsails/lspkind.nvim",
     event = { "VimEnter" },
   },
+  -- autocomplete
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -12,7 +13,7 @@ return {
       "lspkind.nvim",
       "hrsh7th/cmp-nvim-lsp",                -- lsp auto-completion
       "hrsh7th/cmp-nvim-lsp-signature-help", -- lsp auto-completion
-      "hrsh7th/cmp-buffer",                  -- buffer auto-completion
+      -- "hrsh7th/cmp-buffer",                  -- buffer auto-completion
       "hrsh7th/cmp-path",                    -- path auto-completion
       "hrsh7th/cmp-cmdline",                 -- cmdline auto-completion
     },
@@ -24,8 +25,10 @@ return {
       end
 
       local luasnip = require("luasnip")
-      local cmp = require("cmp")
       local lspkind = require("lspkind")
+      local cmp = require("cmp")
+      local types = require("cmp.types")
+      local str = require("cmp.utils.str")
 
       cmp.setup({
         snippet = {
@@ -40,7 +43,7 @@ return {
         },
         mapping = cmp.mapping.preset.insert({
           -- Use <C-b/f> to scroll the docs
-          ['<C-b>'] = cmp.mapping.scroll_docs( -4),
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           -- Use <C-k/j> to switch in items
           ['<C-k>'] = cmp.mapping.select_prev_item(),
@@ -64,8 +67,8 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable( -1) then
-              luasnip.jump( -1)
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
             else
               fallback()
             end
@@ -74,38 +77,69 @@ return {
 
         -- Let's configure the item's appearance
         formatting = {
+          fields = {
+            cmp.ItemField.Abbr,
+            cmp.ItemField.Kind,
+            cmp.ItemField.Menu,
+          },
           format = lspkind.cmp_format({
+            with_text = true,
+            menu = {},
+            -- menu = {
+            --   buffer = "[buffer]",
+            --   nvim_lsp = "[lsp]",
+            --   luasnip = "[luasnip]",
+            --   path = "[path]",
+            -- },
+
             -- show only symbol annotations
-            mode = 'symbol',
+            -- mode = 'symbol',
             -- prevent the popup from showing more than provided characters
             -- can also be a function to dynamically calculate max width such as maxwidth = function()
-              -- return math.floor(0.45 * vim.o.columns) end
-              maxwidth = 50,
+            -- return math.floor(0.45 * vim.o.columns) end
+            maxwidth = function ()
+              return math.floor(0.45 * vim.o.columns)
+            end,
 
-              -- when popup menu exceeds maxwidth, the truncated part would show ellipsis_char
-              ellipsis_char = '...',
+            -- when popup menu exceeds maxwidth, the truncated part would show ellipsis_char
+            ellipsis_char = '...',
 
-              -- show label details in menu. disabled by default
-              show_labelDetails = true,
+            -- show label details in menu. disabled by default
+            -- show_labelDetails = true,
 
-              -- The function below will be called before any actual modifications from lspkind
-              -- so that you can provide more controls on popup customization. 
-              -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-              before = function (entry, vim_item)
-                return vim_item
-              end
-            })
-          },
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization.
+            -- (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function(entry, vim_item)
+              -- Get the full snippet (and only keep first line)
+              -- local word = entry:get_insert_text()
+              -- word = str.oneline(word)
+              --
+              -- if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+              --     and string.sub(vim_item.abbr, -1, -1) == "~"
+              -- then
+              --   word = word .. "~"
+              -- end
+              -- vim_item.abbr = word
 
-          -- Set source precedence
-          sources = cmp.config.sources({
-            { name = 'nvim_lsp' },    -- For nvim-lsp
-            { name = 'luasnip' },     -- For luasnip user
-            { name = 'buffer' },      -- For buffer word completion
-            { name = 'path' },        -- For path completion
+              return vim_item
+            end
           })
-        })
+        },
 
-      end,
-    },
-  }
+        experimental = {
+          ghost_text = true,
+        },
+
+        -- Set source precedence
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },   -- For nvim-lsp
+          -- { name = 'nvim_lsp_signature_help' },
+          { name = 'luasnip', },    -- For luasnip user
+          -- { name = 'buffer' },      -- For buffer word completion
+          { name = 'path' },       -- For path completion
+        })
+      })
+    end,
+  },
+}
